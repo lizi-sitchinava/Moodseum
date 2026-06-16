@@ -39,7 +39,7 @@
       <form id="login-form">
 
         <!------- name ------->
-        <label for="name-input">Your name</label>
+        <label for="name-input">Your Name</label>
         <input
           id="name-input"
           type="text"
@@ -49,6 +49,41 @@
           autocomplete="name"
           placeholder="e.g. Galadriel"
         />
+        
+
+
+        <!------- email ------->
+        <label for="email-input">Your Email</label>
+        <input
+          id="email-input"
+          type="email"
+          name="email"
+          required
+          autocomplete="email"
+          placeholder="e.g. galadriel@gmail.com"
+        />
+
+        <!------- favorite era ------->
+        <label for="era-input">Favorite Art Era</label>
+        <select id="era-input" name="era">
+          <option value="">No Preference</option>
+          <option value="ancient">Ancient</option>
+          <option value="medieval">Medieval</option>
+          <option value="renaissance">Renaissance</option>
+          <option value="modern">Modern</option>
+        </select>
+
+
+
+        <!------- bio ------->
+        <label for="bio-input">About You</label>
+        <textarea
+          id="bio-input"
+          name="bio"
+          placeholder="add a fun bio..."
+          rows="4"
+        ></textarea>
+
 
         <p id="login-error" hidden></p>
 

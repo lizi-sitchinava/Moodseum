@@ -1,10 +1,12 @@
 /* ===== custom properties ===== */
 
 :root {
-  
+
   /* colour palette */
   --color-bg: #f5f0e8;
   --color-text: #2c2c2c;
+  --color-accent: #c9a84c;
+  --color-accent-hover: #b8973d;
   --color-white: #ffffff;
   --color-muted: #7a7a7a;
   --color-border: #ddd5c2;
@@ -18,9 +20,15 @@
   --spacing-xs: 0.4rem;
   --spacing-sm: 0.8rem;
   --spacing-md: 1.6rem;
+  --spacing-lg: 3.2rem;
+  --spacing-xl: 5rem;
 
   /* border radius */
   --radius-sm: 6px;
+  --radius-lg: 20px;
+
+  /* shadows */
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
 
   /* transition */
   --transition: 0.2s ease;
@@ -161,4 +169,64 @@ footer {
   padding: var(--spacing-md);
   font-size: 0.85rem;
   color: var(--color-muted);
+}
+
+
+
+
+/* ===== hero section ===== */
+
+.hero-section {
+  text-align: center;
+  padding: var(--spacing-xl) var(--spacing-md) var(--spacing-lg);
+}
+
+.hero-section h1 {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: normal;
+  color: var(--color-text);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.2;
+}
+
+.hero-section > p {
+  font-size: 1.05rem;
+  color: var(--color-muted);
+  max-width: 520px;
+  margin: 0 auto var(--spacing-lg);
+}
+
+
+/* ===== mood buttons — Flexbox ===== */
+
+.mood-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.mood-btn {
+  background-color: var(--color-white);
+  border: 2px solid var(--color-border);
+  color: var(--color-text);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-lg);
+  font-size: 1rem;
+  transition: all var(--transition);
+}
+
+.mood-btn:hover {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  color: var(--color-white);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
+}
+
+.mood-btn.active {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  color: var(--color-white);
 }

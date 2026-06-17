@@ -29,6 +29,25 @@ let currentOffset = 0;
 
 
 
+// random reading quote
+const quotes = [
+  '°❀⋆.ೃ࿔*:･ "A reader lives a thousand lives before he dies." — George R.R. Martin °❀⋆.ೃ࿔*:･',
+  '°❀⋆.ೃ࿔*:･ "Not all those who wander are lost." — J.R.R. Tolkien °❀⋆.ೃ࿔*:･',
+  '°❀⋆.ೃ࿔*:･ "So many books, so little time." — Frank Zappa °❀⋆.ೃ࿔*:･',
+  '°❀⋆.ೃ࿔*:･ "There is no friend as loyal as a book." — Ernest Hemingway °❀⋆.ೃ࿔*:･',
+  '°❀⋆.ೃ࿔*:･ "One must always be careful of books." — Cassandra Clare °❀⋆.ೃ࿔*:･',
+  '°❀⋆.ೃ࿔*:･ "Books are a uniquely portable magic." — Stephen King °❀⋆.ೃ࿔*:･',
+  '°❀⋆.ೃ࿔*:･ "Reading is dreaming with open eyes." — Anissa Trisdianty °❀⋆.ೃ࿔*:･',
+  '°❀⋆.ೃ࿔*:･ "A book is a dream you hold in your hands." — Neil Gaiman °❀⋆.ೃ࿔*:･',
+  '°❀⋆.ೃ࿔*:･ "I am not afraid of storms, for I am learning how to sail my ship." — Louisa May Alcott °❀⋆.ೃ࿔*:･',
+  '°❀⋆.ೃ࿔*:･ "Words are, in my not-so-humble opinion, our most inexhaustible source of magic." — J.K. Rowling °❀⋆.ೃ࿔*:･',
+];
+
+const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+document.getElementById('daily-quote').textContent = randomQuote;
+
+
+
 // loading functions
 function showLoading() {
   document.getElementById('loading-msg').hidden = false;
@@ -178,6 +197,25 @@ document.querySelectorAll('.mood-btn').forEach(btn => {
     search(btn.dataset.mood, sort, 0);
   });
 });
+
+
+
+
+// surprise me button - random search
+const surpriseWords = [
+  'ocean', 'dragon', 'magic', 'paris', 'forest', 'castle',
+  'witch', 'pirate', 'space', 'ninja', 'vampire', 'robot',
+  'ghost', 'warrior', 'princess', 'detective', 'scientist',
+  'wizard', 'mermaid', 'treasure', 'mystery', 'legend'
+];
+
+document.getElementById('surprise-btn').addEventListener('click', () => {
+  const randomWord = surpriseWords[Math.floor(Math.random() * surpriseWords.length)];
+  document.getElementById('search-input').value = randomWord;
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  search(randomWord, '', 0);
+});
+
 
 
 

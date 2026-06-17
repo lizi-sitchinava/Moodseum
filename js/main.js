@@ -189,12 +189,24 @@ async function search(query, sort = '', offset = 0) {
 
 
 // genre buttons - closure in forEach
+const moodMessages = {
+  romance: 'Ah, looking for some butterflies? 🦋',
+  fantasy: 'Into another world we go! 🌙',
+  adventure: 'Ready for an epic journey? ⚔️',
+  detective: 'On the case! 🔍',
+};
+
 document.querySelectorAll('.mood-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     const sort = document.getElementById('lang-filter').value;
     search(btn.dataset.mood, sort, 0);
+
+    // show mood message
+    const msgEl = document.getElementById('mood-message');
+    msgEl.textContent = moodMessages[btn.dataset.mood] || '';
+    msgEl.hidden = false;
   });
 });
 
@@ -233,6 +245,10 @@ document.getElementById('search-form').addEventListener('submit', (e) => {
   if (!query) return;
 
   document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  
+  // hide mood message on manual search
+  document.getElementById('mood-message').hidden = true;
+  
   search(query, sort, 0);
 });
 

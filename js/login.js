@@ -39,10 +39,10 @@ if (isLoggedIn) {
 
 
 
-  document.getElementById('profile-name').textContent = '👤 ' + name;
-  document.getElementById('profile-email').textContent = email;
-  document.getElementById('profile-genre').textContent = genre ? `Favorite genre: ${genre}` : 'No genre preference';
-  document.getElementById('profile-bio').textContent = bio || 'No bio yet.';
+  document.getElementById('profile-name').textContent = `⋆˚࿔ ${name} 𝜗𝜚˚⋆`;
+  document.getElementById('profile-email').textContent = '✮ ' + email;
+  document.getElementById('profile-genre').textContent = genre ? `✮ Favorite genre: ${genre}` : '۶۟ৎ No genre preference';
+  document.getElementById('profile-bio').textContent = bio ? `✮ ${bio}` : '✮ no bio has been set!';
 
 
 
@@ -52,7 +52,7 @@ if (isLoggedIn) {
 
   document.getElementById('name-input').value = name;
   document.getElementById('email-input').value = email;
-  document.getElementById('era-input').value = genre;
+  if (!genre) document.getElementById('era-input').value = '';
   document.getElementById('bio-input').value = bio;
 
 
@@ -111,12 +111,10 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
   if (isLoggedIn) {
 
     // update profile info card instantly
-
-    document.getElementById('profile-name').textContent = '👤 ' + name;
-    document.getElementById('profile-email').textContent = email;
-    document.getElementById('profile-genre').textContent = genre ? `Favorite genre: ${genre}` : 'No genre preference';
-    document.getElementById('profile-bio').textContent = bio || 'No bio yet.';
-    document.getElementById('nav-user').textContent = name;
+    document.getElementById('profile-name').textContent = `⋆˚࿔ ${name} 𝜗𝜚˚⋆`;
+    document.getElementById('profile-email').textContent = '✮ ' + email;
+    document.getElementById('profile-genre').textContent = genre ? `✮ Favorite genre: ${genre}` : '۶۟ৎ No genre preference';
+    document.getElementById('profile-bio').textContent = bio ? `✮ ${bio}` : '✮ no bio has been set!';
 
 
     successEl.hidden = false;

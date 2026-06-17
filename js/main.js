@@ -23,6 +23,9 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 
 // state
 let savedItems = getSaved();
+let currentQuery = '';
+let currentSort = '';
+let currentOffset = 0;
 
 
 
@@ -30,7 +33,9 @@ let savedItems = getSaved();
 function showLoading() {
   document.getElementById('loading-msg').hidden = false;
   document.getElementById('error-msg').hidden = true;
-  document.getElementById('results-grid').innerHTML = '';
+  if (currentOffset === 0) {
+    document.getElementById('results-grid').innerHTML = '';
+  }
 }
 
 function hideLoading() {
@@ -63,7 +68,6 @@ function createCard(book) {
   const title = document.createElement('p');
   title.className = 'book-card__title';
   title.textContent = book.title;
-
 
   const author = document.createElement('p');
   author.className = 'book-card__author';
@@ -113,30 +117,51 @@ function createCard(book) {
 
 
 // render results
-function renderResults(books) {
+function renderResults(books, append = false) {
   hideLoading();
   const grid = document.getElementById('results-grid');
-  grid.innerHTML = '';
+  const showMoreBtn = document.getElementById('show-more-btn');
 
-  if (books.length === 0) {
+  if (!append) grid.innerHTML = '';
+
+  if (books.length === 0 && !append) {
     showError('No books found — try a different search!');
+    showMoreBtn.hidden = true;
     return;
   }
 
+  // closure in forEach
   books.forEach(book => {
     const card = createCard(book);
     grid.appendChild(card);
   });
+
+  // show the show more button if we got results
+  showMoreBtn.hidden = books.length < 20;
 }
 
 
 
 // search function
-async function search(query, language = '') {
+async function search(query, sort = '', offset = 0) {
   showLoading();
+  currentQuery = query;
+  currentSort = sort;
+  currentOffset = offset;
+
   try {
-    const books = await fetchBooks(query, language);
-    renderResults(books);
+    let books = await fetchBooks(query, '', offset);
+
+    // sort on our side so no books get dropped
+    if (sort === 'new') {
+      books.sort((a, b) => (b.first_publish_year || 0) - (a.first_publish_year || 0));
+    } else if (sort === 'old') {
+      books.sort((a, b) => (a.first_publish_year || 9999) - (b.first_publish_year || 9999));
+    } else if (sort === 'rating') {
+      books.sort((a, b) => (b.number_of_pages_median || 0) - (a.number_of_pages_median || 0));
+    }
+
+    renderResults(books, offset > 0);
   } catch (err) {
     showError('Something went wrong. Please check your connection and try again.');
   }
@@ -144,13 +169,13 @@ async function search(query, language = '') {
 
 
 
-// genre buttons
+// genre buttons - closure in forEach
 document.querySelectorAll('.mood-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const lang = document.getElementById('lang-filter').value;
-    search(btn.dataset.mood, lang);
+    const sort = document.getElementById('lang-filter').value;
+    search(btn.dataset.mood, sort, 0);
   });
 });
 
@@ -160,10 +185,25 @@ document.querySelectorAll('.mood-btn').forEach(btn => {
 document.getElementById('search-form').addEventListener('submit', (e) => {
   e.preventDefault();
   const query = document.getElementById('search-input').value.trim();
-  const lang = document.getElementById('lang-filter').value;
+  const sort = document.getElementById('lang-filter').value;
+
+  if (!query && sort) {
+    showError('Please fill out the search field to use filters.');
+    return;
+  }
+
   if (!query) return;
+
   document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
-  search(query, lang);
+  search(query, sort, 0);
+});
+
+
+
+// show more button
+document.getElementById('show-more-btn').addEventListener('click', () => {
+  currentOffset += 20;
+  search(currentQuery, currentSort, currentOffset);
 });
 
 
@@ -176,18 +216,6 @@ function debounce(fn, delay) {
     timer = setTimeout(() => fn(...args), delay);
   };
 }
-
-
-
-// search only triggers on button click or Enter — not on every keystroke
-document.getElementById('search-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const query = document.getElementById('search-input').value.trim();
-  const lang = document.getElementById('lang-filter').value;
-  if (!query) return;
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
-  search(query, lang);
-});
 
 
 

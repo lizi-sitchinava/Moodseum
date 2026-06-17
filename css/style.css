@@ -825,8 +825,7 @@ footer {
     flex-wrap: wrap;
   }
 
-
-  .mobile-logout {
+  .mobile-logout:not([hidden]) {
     display: block;
   }
 }
@@ -841,7 +840,6 @@ footer {
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   }
 }
-
 
 
 /* ===== show more button ===== */

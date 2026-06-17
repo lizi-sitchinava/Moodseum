@@ -12,9 +12,8 @@ if (isLoggedIn) {
 
   if (navUser) navUser.textContent = localStorage.getItem('user') || '';
 
-
-
   if (logoutBtn) {
+    logoutBtn.hidden = false;
     logoutBtn.addEventListener('click', () => {
       localStorage.removeItem('user');
       localStorage.removeItem('email');
@@ -46,8 +45,6 @@ if (isLoggedIn) {
 
 
 
-
-
   // fetching user info
 
   document.getElementById('name-input').value = name;
@@ -71,25 +68,27 @@ if (isLoggedIn) {
 
 
   // make logo a link when logged in
-    const logo = document.querySelector('.nav__logo');
-    const logoLink = document.createElement('a');
-    logoLink.href = 'index.html';
-    logoLink.className = 'nav__logo';
-    logoLink.textContent = logo.textContent;
-    logo.replaceWith(logoLink);
+  const logo = document.querySelector('.nav__logo');
+  const logoLink = document.createElement('a');
+  logoLink.href = 'index.html';
+  logoLink.className = 'nav__logo';
+  logoLink.textContent = logo.textContent;
+  logo.replaceWith(logoLink);
 
-    // mobile logout button
-    const mobileLogout = document.getElementById('mobile-logout-btn');
-    if (mobileLogout) {
-      mobileLogout.hidden = false;
-      mobileLogout.addEventListener('click', () => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('email');
-        localStorage.removeItem('favoriteGenre');
-        localStorage.removeItem('bio');
-        window.location.href = 'login.html';
-      });
-    }
+
+
+  // mobile logout button
+  const mobileLogout = document.getElementById('mobile-logout-btn');
+  if (mobileLogout) {
+    mobileLogout.hidden = false;
+    mobileLogout.addEventListener('click', () => {
+      localStorage.removeItem('user');
+      localStorage.removeItem('email');
+      localStorage.removeItem('favoriteGenre');
+      localStorage.removeItem('bio');
+      window.location.href = 'login.html';
+    });
+  }
 }
 
 
@@ -149,5 +148,16 @@ document.getElementById('login-form').addEventListener('submit', (e) => {
 
 
 });
+
+
+// hide nav links and actions when not logged in
+if (!isLoggedIn) {
+  const navLinks = document.querySelector('.nav__links');
+  const navActions = document.querySelector('.nav__actions');
+  const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
+  if (navLinks) navLinks.style.display = 'none';
+  if (navActions) navActions.style.display = 'none';
+  if (mobileLogoutBtn) mobileLogoutBtn.hidden = true;
+}
 
 });

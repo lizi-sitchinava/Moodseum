@@ -5,8 +5,12 @@ if (!localStorage.getItem('user')) {
   window.location.href = 'login.html';
 }
 
+
+
 // show username in navbar
 document.getElementById('nav-user').textContent = localStorage.getItem('user') || '';
+
+
 
 // logout
 document.getElementById('logout-btn').addEventListener('click', () => {
@@ -20,15 +24,20 @@ document.getElementById('logout-btn').addEventListener('click', () => {
 let savedItems = getSaved();
 let activeTab = 'all';
 
+
+
 // tab buttons
 document.querySelectorAll('.shelf-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.shelf-tab').forEach(t => t.classList.remove('active'));
+    
     tab.classList.add('active');
     activeTab = tab.dataset.tab;
+
     renderSaved();
   });
 });
+
 
 function renderSaved() {
   const grid = document.getElementById('saved-grid');

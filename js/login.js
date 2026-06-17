@@ -67,6 +67,16 @@ if (isLoggedIn) {
 
   // hide terms checkbox for returning users
   document.getElementById('terms-wrapper').style.display = 'none';
+
+
+  
+  // make logo a link when logged in
+  const logo = document.querySelector('.nav__logo');
+  const logoLink = document.createElement('a');
+  logoLink.href = 'index.html';
+  logoLink.className = 'nav__logo';
+  logoLink.textContent = logo.textContent;
+  logo.replaceWith(logoLink);
 }
 
 
